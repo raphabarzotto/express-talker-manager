@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const { readFile } = require('../helpers/readWriteFile');
-const { writeFile } = require('../helpers/readWriteFile');
+const { readFile, writeFile } = require('../helpers/readWriteFile');
 
 const valToken = require('../middlewares/valToken');
 const valName = require('../middlewares/valName');
@@ -51,12 +50,12 @@ router.put('/:id', [
   valWatchedAt, 
   valRate,
 ], async (req, res) => {
-  const talkers = await readFile();
+  const talkers = await readFile(FILE_PATH);
   const { id } = req.params;
   const { name, age, talk } = req.body;
   const talkerId = talkers.findIndex((index) => index.id === Number(id));
   talkers[talkerId] = { name, age, id: Number(id), talk };
-  await writeFile(talkers);
+  await writeFile(FILE_PATH, talkers);
   return res.status(200).json(talkers.find((index) => index.id === Number(id)));
 });
 
