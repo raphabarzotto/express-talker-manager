@@ -16,6 +16,18 @@ router.get('/', async (_req, res) => {
   return res.status(200).json(talkers);
 });
 
+router.get('/:id', async (req, res) => {
+  const talkers = await readFile(FILE_PATH);
+  const { id } = req.params;
+  const talker = talkers.find((index) => index.id === Number(id));
+
+  if (!talker) {
+    return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  }
+
+  return res.status(200).json(talker);
+});
+
 router.post('/', [
   valToken, 
   valName, 
@@ -31,16 +43,21 @@ router.post('/', [
   return res.status(201).json({ id: talkers.length, name, age, talk });
 });
 
-router.get('/:id', async (req, res) => {
-  const talkers = await readFile(FILE_PATH);
+router.put('/:id', [
+  valToken, 
+  valName, 
+  valAge, 
+  valTalk, 
+  valWatchedAt, 
+  valRate,
+], async (req, res) => {
+  const talkers = await readFile();
   const { id } = req.params;
-  const talker = talkers.find((index) => index.id === Number(id));
-
-  if (!talker) {
-    return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
-  }
-
-  return res.status(200).json(talker);
+  const { name, age, talk } = req.body;
+  const talkerId = talkers.findIndex((index) => index.id === Number(id));
+  talkers[talkerId] = { name, age, id: Number(id), talk };
+  await writeContentFile(talkers);
+  return res.status(200).json(talkers.find((index) => index.id === Number(id)));
 });
 
 module.exports = router;
