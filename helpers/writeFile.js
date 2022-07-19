@@ -1,6 +1,6 @@
 const fs = require('fs').promises;
 
-const readFile = require("./readFile")
+const readFile = require('./readFile');
 
 const writeFile = async (path, content) => {
   try {
