@@ -15,13 +15,6 @@ router.get('/', async (_req, res) => {
   return res.status(200).json(talkers);
 });
 
-router.get('/search', valToken, async (req, res) => {
-  const { q } = req.query;
-  const talkers = readFile(FILE_PATH);
-  const talkersSearch = talkers.filter(({ name }) => name.includes(q.toLowerCase()));
-  return res.status(200).json(talkersSearch);
-});
-
 router.get('/:id', async (req, res) => {
   const talkers = await readFile(FILE_PATH);
   const { id } = req.params;
@@ -73,6 +66,13 @@ router.delete('/:id', valToken, async (req, res) => {
   data.splice(talkerId, 1);
   await writeFile(FILE_PATH, data);
   return res.status(204).end();
+});
+
+router.get('/search', valToken, async (req, res) => {
+  const { q } = req.query;
+  const talkers = readFile(FILE_PATH);
+  const talkersSearch = talkers.filter(({ name }) => name.includes(q.toLowerCase()));
+  return res.status(200).json(talkersSearch);
 });
 
 module.exports = router;
