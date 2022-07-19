@@ -27,7 +27,7 @@ router.post('/', [
   const talkers = await readFile(FILE_PATH);
   const { name, age, talk } = req.body;
   talkers.push({ id: talkers.length + 1, name, age, talk });
-  await writeFile(FILE_PATH,talkers);
+  await writeFile(FILE_PATH, talkers);
   return res.status(201).json({ id: talkers.length, name, age, talk });
 });
 
