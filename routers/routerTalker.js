@@ -56,7 +56,7 @@ router.put('/:id', [
   const { name, age, talk } = req.body;
   const talkerId = talkers.findIndex((index) => index.id === Number(id));
   talkers[talkerId] = { name, age, id: Number(id), talk };
-  await writeContentFile(talkers);
+  await writeFile(talkers);
   return res.status(200).json(talkers.find((index) => index.id === Number(id)));
 });
 
