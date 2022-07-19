@@ -9,16 +9,11 @@ const readFile = async (path) => {
   }
 };
 
+// arrumado com ajuda
 const writeFile = async (path, content) => {
   try {
-    const arrContent = await readFile(path) || [];
-
-    arrContent.push(content);
-    await fs.writeFile(path, JSON.stringify(arrContent));
-
-    return content;
+    await fs.writeFile(path, JSON.stringify(content));
   } catch (error) {
-    console.log(error.message);
     return null;
   }
 };
