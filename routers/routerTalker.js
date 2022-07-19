@@ -29,8 +29,8 @@ router.get('/:id', async (req, res) => {
 
 router.get('/search', valToken, async (req, res) => {
   const { q } = req.query;
-  const talkers = await readFile(FILE_PATH);
-  const talkersSearch = talkers.filter(({ name }) => name.includes(q));
+  const talkers = readFile(FILE_PATH);
+  const talkersSearch = talkers.filter(({ name }) => name.includes(q.toLowerCase()));
   return res.status(200).json(talkersSearch);
 });
 
