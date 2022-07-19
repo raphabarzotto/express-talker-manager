@@ -10,16 +10,16 @@ const valRate = require('../middlewares/valRate');
 
 const FILE_PATH = './talker.json';
 
+router.get('/', async (_req, res) => {
+  const talkers = await readFile(FILE_PATH);
+  return res.status(200).json(talkers);
+});
+
 router.get('/search', valToken, async (req, res) => {
   const { q } = req.query;
   const talkers = readFile(FILE_PATH);
   const talkersSearch = talkers.filter(({ name }) => name.includes(q.toLowerCase()));
   return res.status(200).json(talkersSearch);
-});
-
-router.get('/', async (_req, res) => {
-  const talkers = await readFile(FILE_PATH);
-  return res.status(200).json(talkers);
 });
 
 router.get('/:id', async (req, res) => {
