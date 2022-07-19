@@ -1,15 +1,15 @@
 const router = require('express').Router();
 const { readWriteFile } = require('../helpers/readWriteFile');
 
-const PATH_FILE = './talker.json';
+const FILE_PATH = './talker.json';
 
 router.get('/', async (_req, res) => {
-  const talkers = await readWriteFile(PATH_FILE);
+  const talkers = await readWriteFile(FILE_PATH);
   return res.status(200).json(talkers);
 });
 
 router.get('/:id', async (req, res) => {
-  const talkers = await readWriteFile(PATH_FILE);
+  const talkers = await readWriteFile(FILE_PATH);
   const { id } = req.params;
   const talker = talkers.find((index) => index.id === Number(id));
 
