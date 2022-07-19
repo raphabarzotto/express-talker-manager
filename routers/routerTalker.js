@@ -1,11 +1,34 @@
 const router = require('express').Router();
 const { readFile } = require('../helpers/readFile');
+const { writeFile } = require('../helpers/writeFile');
+
+const valToken = require('../middlewares/valToken');
+const valName = require('../middlewares/valName');
+const valAge = require('../middlewares/valAge');
+const valTalk = require('../middlewares/valTalk');
+const valWatchedAt = require('../middlewares/valWatchedAt');
+const valRate = require('../middlewares/valRate');
 
 const FILE_PATH = './talker.json';
 
 router.get('/', async (_req, res) => {
   const talkers = await readFile(FILE_PATH);
   return res.status(200).json(talkers);
+});
+
+router.post('/', [
+  valToken, 
+  valName, 
+  valAge, 
+  valTalk, 
+  valWatchedAt, 
+  valRate,
+], async (req, res) => {
+  const talkers = await readFile(FILE_PATH);
+  const { name, age, talk } = req.body;
+  talkers.push({ id: talkers.length + 1, name, age, talk });
+  await writeFile(talkers);
+  return res.status(201).json({ id: talkers.length, name, age, talk });
 });
 
 router.get('/:id', async (req, res) => {
