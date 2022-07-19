@@ -1,6 +1,13 @@
 const fs = require('fs').promises;
 
-const readFile = require('./readFile');
+const readFile = async (path) => {
+  try {
+    const content = await fs.readFile(path, 'utf8');
+    return JSON.parse(content);
+  } catch (error) {
+    return null;
+  }
+};
 
 const writeFile = async (path, content) => {
   try {
@@ -17,5 +24,6 @@ const writeFile = async (path, content) => {
 };
 
 module.exports = {
+  readFile,
   writeFile,
-}; 
+};

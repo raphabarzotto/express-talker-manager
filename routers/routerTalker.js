@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { readFile } = require('../helpers/readFile');
-const { writeFile } = require('../helpers/writeFile');
+const { readFile } = require('../helpers/readWriteFile');
+const { writeFile } = require('../helpers/readWriteFile');
 
 const valToken = require('../middlewares/valToken');
 const valName = require('../middlewares/valName');
