@@ -59,4 +59,13 @@ router.put('/:id', [
   return res.status(200).json(talkers.find((index) => index.id === Number(id)));
 });
 
+router.delete('/:id', valToken, async (req, res) => {
+  const { id } = req.params;
+  const data = await readFile(FILE_PATH);
+  const talkerId = data.findIndex((index) => index.id === Number(id));
+  data.splice(talkerId, 1);
+  await writeFile(FILE_PATH, data);
+  return res.status(204).end();
+});
+
 module.exports = router;
