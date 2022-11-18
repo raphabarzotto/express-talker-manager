@@ -43,7 +43,7 @@ router.get('/:id', async (req, res) => {
   const talker = talkers.find((index) => index.id === Number(id));
 
   if (!talker) {
-    return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+    return res.status(404).json({ message: 'Speaker not found' });
   }
 
   return res.status(200).json(talker);
