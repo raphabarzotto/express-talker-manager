@@ -1,13 +1,13 @@
 const valWatchedAt = (req, res, next) => {
   const { watchedAt } = req.body.talk;
-// RegEx de data
+// Data RegEx
   const re = /[0-9]{2}\/{1}[0-9]{2}\/{1}[0-9]{4}/;
   if (!watchedAt) {
-    return res.status(400).json({ message: 'O campo "watchedAt" é obrigatório' });
+    return res.status(400).json({ message: '"watchedAt" field required' });
   }
   if (!re.test(watchedAt)) {
     return res.status(400)
-      .json({ message: 'O campo "watchedAt" deve ter o formato "dd/mm/aaaa"' });
+      .json({ message: '"watchedAt" field must be format "dd/mm/yyyy"' });
   } 
   next();
 };
